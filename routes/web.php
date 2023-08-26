@@ -1,5 +1,11 @@
 <?php
-
+// admin
+use App\Http\Controllers\Admin\AdminPageController;
+use App\Http\Controllers\Admin\AdminAuthController;
+// front
+use App\Http\Controllers\Front\HomePageController;
+// check admin
+use App\Http\Middleware\CheckAuthAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +20,38 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('loggedin')->group(function() {
-    Route::get('login', 'AuthController@loginView')->name('login-view');
-    Route::post('login', 'AuthController@login')->name('login');
-    Route::get('register', 'AuthController@registerView')->name('register-view');
-    Route::post('register', 'AuthController@register')->name('register');
+    Route::controller(AdminAuthController::class)->group(function () {
+        Route::get('login', 'loginView')->name('login-view');
+        Route::post('login', 'login')->name('login');
+        Route::get('register', 'registerView')->name('register-view');
+        Route::post('register', 'register')->name('register');
+    });
 });
 
-Route::middleware('auth')->group(function() {
-    Route::get('/', 'PageController@loadPage')->name('dashboard');
-    Route::get('logout', 'AuthController@logout')->name('logout');
-    Route::get('page/{layout}/{pageName}', 'PageController@loadPage')->name('page');
+Route::middleware([CheckAuthAdmin::class])->group(function(){
+    Route::get('/',function(){
+        return redirect()->route('admin.dashboard');
+    });
+});
+
+Route::group(['prefix'=>'admin','as'=>'admin.','middleware' => ['auth']], function(){
+    Route::controller(AdminPageController::class)->group(function () {
+        Route::get('/', 'loadPage')->name('dashboard');
+        Route::get('page/{layout}/{pageName}', 'loadPage')->name('page');
+    });
+    Route::controller(AdminAuthController::class)->group(function () {
+        Route::get('logout', 'logout')->name('logout');
+    });
+});
+
+Route::group(['prefix'=>'home','as'=>'home.','middleware' => ['auth']], function(){
+    Route::get('/',function(){
+        return 'Trang chủ';
+    })->name('home.page');
+    Route::controller(HomePageController::class)->group(function () {
+        
+    });
+    Route::controller(AdminAuthController::class)->group(function () {
+        Route::get('logout', 'logout')->name('logout');
+    });
 });

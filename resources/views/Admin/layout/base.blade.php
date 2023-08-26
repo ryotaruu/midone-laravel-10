@@ -15,14 +15,14 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('dist/images/logo.svg') }}" rel="shortcut icon">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Midone admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Midone admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="LEFT4CODE">
+    <meta name="description" content="{{ env("APP_DESCRIPTION") }}">
+    <meta name="keywords" content="{{ env("APP_KEYWORDS") }}">
+    <meta name="author" content="{{ env("APP_AUTHOR") }}">
 
     @yield('head')
 
     <!-- BEGIN: CSS Assets-->
-    @vite(['resources/css/app.css', 'dist/css/app.css'])
+    @vite(['resources/css/app.css', 'public/dist/css/app.css','resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('dist/css/app.css') }}" />
     <!-- END: CSS Assets-->
 </head>

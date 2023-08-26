@@ -1,21 +1,20 @@
-@extends('../layout/main')
+@extends('Admin/layout/main')
 
 @section('head')
     @yield('subhead')
 @endsection
 
 @section('content')
-    @include('../layout/components/mobile-menu')
+    @include('Admin/layout/components/mobile-menu')
     <div class="flex">
-        <!-- BEGIN: Side Menu -->
-        <nav class="side-nav">
+        <!-- BEGIN: Simple Menu -->
+        <nav class="side-nav side-nav--simple">
             <a href="" class="intro-x flex items-center pl-5 pt-4">
                 <img alt="Midone Laravel Admin Dashboard Starter Kit" class="w-6" src="{{ asset('dist/images/logo.svg') }}">
-                <span class="hidden xl:block text-white text-lg ml-3 font-medium">Midone</span>
             </a>
             <div class="side-nav__devider my-6"></div>
             <ul>
-                @foreach ($side_menu as $menu)
+                @foreach ($simple_menu as $menu)
                     @if ($menu == 'devider')
                         <li class="side-nav__devider my-6"></li>
                     @else
@@ -25,7 +24,7 @@
                                     <i data-feather="{{ $menu['icon'] }}"></i>
                                 </div>
                                 <div class="side-menu__title">
-                                    {{ $menu['title'] }}
+                                    {{ $menu['title'] }}  
                                     @if (isset($menu['sub_menu']))
                                         <i data-feather="chevron-down" class="side-menu__sub-icon"></i>
                                     @endif
@@ -40,7 +39,7 @@
                                                     <i data-feather="activity"></i>
                                                 </div>
                                                 <div class="side-menu__title">
-                                                    {{ $subMenu['title'] }}
+                                                    {{ $subMenu['title'] }} 
                                                     @if (isset($subMenu['sub_menu']))
                                                         <i data-feather="chevron-down" class="side-menu__sub-icon"></i>
                                                     @endif
@@ -59,7 +58,7 @@
                                                         </li>
                                                     @endforeach
                                                 </ul>
-                                            @endif
+                                            @endif                                
                                         </li>
                                     @endforeach
                                 </ul>
@@ -69,7 +68,7 @@
                 @endforeach
             </ul>
         </nav>
-        <!-- END: Side Menu -->
+        <!-- END: Simple Menu -->
         <!-- BEGIN: Content -->
         <div class="content">
             @include('../layout/components/top-bar')

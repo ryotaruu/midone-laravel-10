@@ -1,4 +1,4 @@
-@extends('../layout/' . $layout)
+@extends('Admin/layout/' . $layout)
 
 @section('subhead')
     <title>Dashboard - Midone - Laravel Admin Dashboard Starter Kit</title>

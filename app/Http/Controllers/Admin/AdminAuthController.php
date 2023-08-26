@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+class AdminAuthController extends Controller
 {
     /**
      * Show specified view.
@@ -15,7 +17,7 @@ class AuthController extends Controller
      */
     public function loginView()
     {
-        return view('login/main', [
+        return view('Admin/login/main', [
             'layout' => 'login'
         ]);
     }
@@ -28,7 +30,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        if (!\Auth::attempt([
+        if (!Auth::attempt([
             'email' => $request->email, 
             'password' => $request->password
         ])) {
@@ -44,7 +46,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        \Auth::logout();
+        Auth::logout();
         return redirect('login');
     }
 }

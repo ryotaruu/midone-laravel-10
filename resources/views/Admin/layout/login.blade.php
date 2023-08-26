@@ -1,4 +1,4 @@
-@extends('../layout/base')
+@extends('Admin/layout/base')
 
 @section('body')
     <body class="login">
