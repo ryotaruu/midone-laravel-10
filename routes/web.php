@@ -34,7 +34,7 @@ Route::middleware([CheckAuthAdmin::class])->group(function(){
     });
 });
 
-Route::group(['prefix'=>'admin','as'=>'admin.','middleware' => ['auth']], function(){
+Route::group(['prefix'=>'admin','as'=>'admin.','middleware' => ['auth','checkAdmin']], function(){
     Route::controller(AdminPageController::class)->group(function () {
         Route::get('/', 'loadPage')->name('dashboard');
         Route::get('page/{layout}/{pageName}', 'loadPage')->name('page');
